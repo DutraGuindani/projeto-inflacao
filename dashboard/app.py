@@ -18,45 +18,48 @@ st.markdown("""
     .main-title {
         font-size: 2rem;
         font-weight: 700;
-        color: #0f172a;
+        color: var(--text-color);
         margin-bottom: 0.2rem;
     }
     .sub-title {
         font-size: 1rem;
-        color: #475569;
+        color: var(--text-color);
+        opacity: 0.75;
         margin-bottom: 1.5rem;
     }
     .metric-card {
-        background-color: #f8fafc;
-        border: 1px solid #e2e8f0;
+        background-color: var(--secondary-background-color);
+        border: 1px solid rgba(128, 128, 128, 0.2);
         border-radius: 8px;
         padding: 1rem 1.2rem;
     }
     .metric-value {
         font-size: 1.8rem;
         font-weight: 700;
-        color: #0f172a;
+        color: var(--text-color);
     }
     .metric-label {
         font-size: 0.8rem;
-        color: #64748b;
+        color: var(--text-color);
+        opacity: 0.7;
         font-weight: 600;
         text-transform: uppercase;
         letter-spacing: 0.05em;
     }
     .metric-sub {
         font-size: 0.85rem;
-        color: #334155;
+        color: var(--text-color);
+        opacity: 0.75;
         margin-top: 0.2rem;
     }
     .callout {
-        background-color: #f1f5f9;
-        border-left: 4px solid #334155;
+        background-color: var(--secondary-background-color);
+        border-left: 4px solid #3b82f6;
         padding: 0.8rem 1rem;
         border-radius: 0 6px 6px 0;
         margin-bottom: 1.5rem;
         font-size: 0.95rem;
-        color: #1e293b;
+        color: var(--text-color);
     }
 </style>
 """, unsafe_allow_html=True)
@@ -335,19 +338,20 @@ fig_bar.add_vline(
     x=dados["reajuste_sm_pct"],
     line_width=2,
     line_dash="dash",
-    line_color="#1e3a8a",
+    line_color="#3b82f6",
     annotation_text=f"Salário Mínimo (+{dados['reajuste_sm_pct']}%)",
     annotation_position="bottom right",
-    annotation_font=dict(size=11, color="#1e3a8a")
+    annotation_font=dict(size=11, color="#3b82f6")
 )
 
 fig_bar.update_layout(
     xaxis_title="Variação Composta Acumulada (%)",
     yaxis_title="",
-    plot_bgcolor="white",
+    paper_bgcolor="rgba(0,0,0,0)",
+    plot_bgcolor="rgba(0,0,0,0)",
     height=460,
     margin=dict(l=10, r=40, t=10, b=40),
-    xaxis=dict(showgrid=True, gridcolor="#f1f5f9")
+    xaxis=dict(showgrid=True, gridcolor="rgba(128, 128, 128, 0.2)")
 )
 st.plotly_chart(fig_bar, use_container_width=True)
 
@@ -366,26 +370,27 @@ with col_l:
     fig_line.add_trace(go.Scatter(
         x=df_evol["data"], y=df_evol["sm_acum"],
         mode="lines", name="Salário Mínimo",
-        line=dict(color="#2563eb", width=2.5, dash="dash", shape="hv")
+        line=dict(color="#3b82f6", width=2.5, dash="dash", shape="hv")
     ))
     fig_line.add_trace(go.Scatter(
         x=df_evol["data"], y=df_evol["inpc_acum"],
         mode="lines", name="INPC (1 a 5 SM)",
-        line=dict(color="#d97706", width=2)
+        line=dict(color="#f59e0b", width=2.2)
     ))
     fig_line.add_trace(go.Scatter(
         x=df_evol["data"], y=df_evol["ipca_acum"],
         mode="lines", name="IPCA (1 a 40 SM)",
-        line=dict(color="#0f172a", width=2)
+        line=dict(color="#38bdf8", width=2)
     ))
     
     fig_line.update_layout(
-        plot_bgcolor="white",
+        paper_bgcolor="rgba(0,0,0,0)",
+        plot_bgcolor="rgba(0,0,0,0)",
         height=400,
         margin=dict(l=10, r=10, t=10, b=40),
         legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="right", x=1),
-        xaxis=dict(showgrid=True, gridcolor="#f1f5f9"),
-        yaxis=dict(title="Variação acumulada (%)", showgrid=True, gridcolor="#f1f5f9")
+        xaxis=dict(showgrid=True, gridcolor="rgba(128, 128, 128, 0.2)"),
+        yaxis=dict(title="Variação acumulada (%)", showgrid=True, gridcolor="rgba(128, 128, 128, 0.2)")
     )
     st.plotly_chart(fig_line, use_container_width=True)
 
@@ -399,23 +404,24 @@ with col_r:
     fig_grp.add_trace(go.Bar(
         y=df_p_sorted["nome_categoria"], x=df_p_sorted["peso_inpc"],
         name="INPC (1 a 5 SM)", orientation="h",
-        marker_color="#d97706", text=[f"{v:.1f}%" for v in df_p_sorted["peso_inpc"]],
+        marker_color="#f59e0b", text=[f"{v:.1f}%" for v in df_p_sorted["peso_inpc"]],
         textposition="inside"
     ))
     fig_grp.add_trace(go.Bar(
         y=df_p_sorted["nome_categoria"], x=df_p_sorted["peso_ipca"],
         name="IPCA (1 a 40 SM)", orientation="h",
-        marker_color="#0f172a", text=[f"{v:.1f}%" for v in df_p_sorted["peso_ipca"]],
+        marker_color="#38bdf8", text=[f"{v:.1f}%" for v in df_p_sorted["peso_ipca"]],
         textposition="inside"
     ))
     
     fig_grp.update_layout(
         barmode="group",
-        plot_bgcolor="white",
+        paper_bgcolor="rgba(0,0,0,0)",
+        plot_bgcolor="rgba(0,0,0,0)",
         height=400,
         margin=dict(l=10, r=10, t=10, b=40),
         legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="right", x=1),
-        xaxis=dict(title="Participação no orçamento (%)", showgrid=True, gridcolor="#f1f5f9"),
+        xaxis=dict(title="Participação no orçamento (%)", showgrid=True, gridcolor="rgba(128, 128, 128, 0.2)"),
         yaxis=dict(title="")
     )
     st.plotly_chart(fig_grp, use_container_width=True)

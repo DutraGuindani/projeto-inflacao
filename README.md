@@ -1,6 +1,6 @@
 # Inflação e Poder de Compra no Brasil (2020–Hoje)
 
-**Dashboard online:** https://projeto-inflacao-dajj9dnh8qffyvsccnk32c.streamlit.app/
+**Dashboard online:** https://projeto-inflacao-brasil.streamlit.app/
 
 Análise da perda de poder de compra e da compressão do orçamento das famílias de menor renda entre janeiro de 2020 e o período atual, confrontando dados oficiais do IPCA, INPC e Salário Mínimo.
 
